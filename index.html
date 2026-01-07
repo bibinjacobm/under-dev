@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Under Development</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: #333;
+        }
+
+        .container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .content-box {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .status {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+
+        .loader {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 2rem 0;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .quote-section {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .quote-text {
+            font-size: 1.1rem;
+            font-style: italic;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+            min-height: 60px;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .quote-text.visible {
+            opacity: 1;
+        }
+
+        .quote-author {
+            font-size: 0.9rem;
+            color: #888;
+            font-weight: 500;
+        }
+
+        footer {
+            padding: 2rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2rem;
+            }
+            
+            .content-box {
+                padding: 2rem 1.5rem;
+            }
+            
+            .quote-text {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content-box">
+            <div class="logo">🚀</div>
+            <div class="status">Something Cool Coming Soon...</div>
+            <div class="loader"></div>
+            <p style="color: #888; margin-top: 1rem;">
+                <span style="font-size: 1.1rem; display: block; margin-bottom: 0.5rem;">💭 "Is it done yet?"</span>
+                <span style="font-size: 0.95rem; font-style: italic;">"Almost! Just debugging the bugs in my bug fixes..."</span>
+            </p>
+            
+            <div class="quote-section">
+                <div class="quote-text" id="quoteText">Loading inspiration...</div>
+                <div class="quote-author" id="quoteAuthor"></div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        Designed by Bibin Jacob
+    </footer>
+
+    <script>
+        const quoteText = document.getElementById('quoteText');
+        const quoteAuthor = document.getElementById('quoteAuthor');
+
+        // Curated list of inspirational quotes
+        const quotes = [
+            { text: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
+            { text: "Innovation distinguishes between a leader and a follower.", author: "Steve Jobs" },
+            { text: "The future belongs to those who believe in the beauty of their dreams.", author: "Eleanor Roosevelt" },
+            { text: "Success is not final, failure is not fatal: it is the courage to continue that counts.", author: "Winston Churchill" },
+            { text: "Believe you can and you're halfway there.", author: "Theodore Roosevelt" },
+            { text: "The only impossible journey is the one you never begin.", author: "Tony Robbins" },
+            { text: "Quality is not an act, it is a habit.", author: "Aristotle" },
+            { text: "The best time to plant a tree was 20 years ago. The second best time is now.", author: "Chinese Proverb" },
+            { text: "Your time is limited, don't waste it living someone else's life.", author: "Steve Jobs" },
+            { text: "Whether you think you can or you think you can't, you're right.", author: "Henry Ford" },
+            { text: "The secret of getting ahead is getting started.", author: "Mark Twain" },
+            { text: "Don't watch the clock; do what it does. Keep going.", author: "Sam Levenson" },
+            { text: "The harder you work for something, the greater you'll feel when you achieve it.", author: "Anonymous" },
+            { text: "Dream bigger. Do bigger.", author: "Anonymous" },
+            { text: "Don't stop when you're tired. Stop when you're done.", author: "Anonymous" },
+            { text: "Wake up with determination. Go to bed with satisfaction.", author: "Anonymous" },
+            { text: "Do something today that your future self will thank you for.", author: "Sean Patrick Flanery" },
+            { text: "Little things make big days.", author: "Anonymous" },
+            { text: "It's going to be hard, but hard does not mean impossible.", author: "Anonymous" },
+            { text: "Don't wait for opportunity. Create it.", author: "Anonymous" }
+        ];
+
+        let currentQuoteIndex = -1;
+
+        function fetchQuote() {
+            // Get a random quote different from the current one
+            let newIndex;
+            do {
+                newIndex = Math.floor(Math.random() * quotes.length);
+            } while (newIndex === currentQuoteIndex && quotes.length > 1);
+            
+            currentQuoteIndex = newIndex;
+            const quote = quotes[currentQuoteIndex];
+            
+            // Fade out
+            quoteText.classList.remove('visible');
+            
+            setTimeout(() => {
+                quoteText.textContent = `"${quote.text}"`;
+                quoteAuthor.textContent = `— ${quote.author}`;
+                
+                // Fade in
+                quoteText.classList.add('visible');
+            }, 500);
+        }
+
+        // Initial quote
+        fetchQuote();
+
+        // Change quote every 45 seconds
+        setInterval(fetchQuote, 45000);
+    </script>
+</body>
+</html>
